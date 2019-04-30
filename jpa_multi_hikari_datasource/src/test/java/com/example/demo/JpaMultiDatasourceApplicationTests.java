@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.db1.Db1Repository;
 import com.example.demo.db2.Db2Repository;
+import com.example.demo.db2_1.Db2_1Repository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -24,6 +25,9 @@ public class JpaMultiDatasourceApplicationTests {
 	@Autowired 
 	private Db1Repository db1Repository;
 	
+	@Autowired 
+	private Db2_1Repository db2_1Repository;
+	
 	@Test
 	public void 디비_확인(){
 		System.out.println(db1Repository.findAll());
@@ -31,5 +35,9 @@ public class JpaMultiDatasourceApplicationTests {
 		System.out.println("중간");
 		
 		System.out.println(db2Repository.findAll());
+		
+		System.out.println("중간2");
+		
+		System.out.println(db2_1Repository.findAll());
 	}
 }

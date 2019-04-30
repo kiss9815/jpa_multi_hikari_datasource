@@ -31,30 +31,30 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @EnableJpaRepositories(
-    basePackages = "com.example.demo.db2", 
-    entityManagerFactoryRef = "data2EntityManager", 
-    transactionManagerRef = "data2TransactionManager"
+    basePackages = "com.example.demo.db2_1", 
+    entityManagerFactoryRef = "data2_1EntityManager", 
+    transactionManagerRef = "data2_1TransactionManager"
 )
-public class Db2Config {
+public class Db2_1Config {
     @Autowired
     private Environment env;
  
-    @Bean(name="data2EntityManager")
-    public LocalContainerEntityManagerFactoryBean data2EntityManager() {
+    @Bean(name="data2_1EntityManager")
+    public LocalContainerEntityManagerFactoryBean data2_1EntityManager() {
         LocalContainerEntityManagerFactoryBean em  = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource2());
+        em.setDataSource(dataSource2_1());
         em.setPackagesToScan( new String[] { "com.example.demo.vo.db2" });
  
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setShowSql(false);
         vendorAdapter.setGenerateDdl(false);
-        vendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL5InnoDBDialect");
+
         em.setJpaVendorAdapter(vendorAdapter);
         
         System.out.println("log : " +  env.getProperty("jpa.hibernate.dialect"));
         Map<String, Object> jpaProperties = new HashMap<>();
         
-        jpaProperties.put("hibernate.hbm2ddl.auto", env.getProperty("jpa.hibernate.ddl-auto"));
+//        jpaProperties.put("hibernate.hbm2ddl.auto", env.getProperty("jpa.hibernate.ddl-auto"));
         
         
         em.setJpaPropertyMap(jpaProperties);
@@ -63,32 +63,34 @@ public class Db2Config {
     }
  
     @Bean
-    public HikariDataSource dataSource2() {
+    public HikariDataSource dataSource2_1() {
     	HikariConfig config = new HikariConfig();
     	config.setUsername(env.getProperty("db2.datasource.hikari.username")); 
     	config.setPassword(env.getProperty("db2.datasource.hikari.password")); 
     	config.setDriverClassName(env.getProperty("db2.datasource.hikari.driverClassName"));
-    	config.setJdbcUrl( env.getProperty("db2.datasource.hikari.jdbc-url_1") );
+    	config.setJdbcUrl( env.getProperty("db2.datasource.hikari.jdbc-url_2") );
     	config.setMaxLifetime( Long.parseLong(env.getProperty("db2.datasource.hikari.max-lifetime")) );
     	config.setConnectionTimeout(Long.parseLong( env.getProperty("db2.datasource.hikari.connection-timeout")));
     	config.setValidationTimeout(Long.parseLong( env.getProperty("db2.datasource.hikari.validation-timeout")));
+    	
     	
     	config.addDataSourceProperty( "cachePrepStmts" ,  env.getProperty("db2.datasource.hikari.data-source-properties.cachePrepStmts"));
         config.addDataSourceProperty( "prepStmtCacheSize" , env.getProperty("db2.datasource.hikari.data-source-properties.prepStmtCacheSize"));
         config.addDataSourceProperty( "prepStmtCacheSqlLimit" , env.getProperty("db2.datasource.hikari.data-source-properties.prepStmtCacheSqlLimit") );	
         config.addDataSourceProperty( "useServerPrepStmts" , env.getProperty("db2.datasource.hikari.data-source-properties.useServerPrepStmts") );
+        
     	
     	config = new HikariDataSource( config );
     	HikariDataSource dataSource = new HikariDataSource( config );
+        
         return dataSource;
     }
-    
  
-    @Bean(name="data2TransactionManager")
-    public PlatformTransactionManager data2TransactionManager() {
+    @Bean(name="data2_1TransactionManager")
+    public PlatformTransactionManager data2_1TransactionManager() {
   
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(data2EntityManager().getObject());
+        transactionManager.setEntityManagerFactory(data2_1EntityManager().getObject());
         
         return transactionManager;
     }

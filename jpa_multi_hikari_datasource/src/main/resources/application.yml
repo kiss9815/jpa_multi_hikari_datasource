@@ -23,7 +23,8 @@ db1:
 db2:
   datasource:
     hikari:
-      jdbc-url: jdbc:mysql://127.0.0.1:3306/boilerplate?&useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+      jdbc-url_1: jdbc:mysql://127.0.0.1:3306/boilerplate?&useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+      jdbc-url_2: jdbc:mysql://127.0.0.1:3306/boilerplate?&useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
       username: root
       password: brian 
       driverClassName: com.mysql.jdbc.Driver
